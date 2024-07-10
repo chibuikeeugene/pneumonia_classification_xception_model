@@ -9,7 +9,8 @@ def make_model(
         learning_rate, 
         size_inner,
         droprate):
-
+    """ function to build the model block"""
+    
     base_model = Xception(
         weights='imagenet',
         include_top=False,

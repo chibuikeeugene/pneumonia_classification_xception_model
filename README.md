@@ -1,6 +1,6 @@
 # PNEUMONIA XRAY RESULT CLASSIFICATION
 
-A machine learning program that classifies correctly sick patient's chest xray reports to be either pneumonia infected or normal. This program uses a **neural network algorithm** to detect sick patient.
+A machine learning program api that classifies correctly sick patient's chest xray reports to be either pneumonia infected or normal. This program uses a **neural network algorithm** to detect sick patient.
 
 ## Data set and its description  
 

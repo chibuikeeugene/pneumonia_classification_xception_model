@@ -21,29 +21,30 @@ cnn_model = dm.load_pneumonia_model()
 
 
 def make_single_prediction(*, image_name: str, image_dir: str):
-    """ make a single predictiong using the saved model when give
+    """ make a single predictiong using the saved model when given the
     image name and directory path"""
-    
     dataframe = dm.load_single_img(data_folder=image_dir, filename=image_name)
+    
 
     updated_data = dataframe.drop(['label'], axis=1)
     
     logger.log(_Logger__message = updated_data, _Logger__level = 5)
 
-    """ call the cnn model predict method"""
+    # call the cnn model predict method
+    logger.info('Loaded data being preprocessed')
     preprocessed_data = dp.image_resizing_and_dataset_creation(
         data= updated_data,
         c_mode= None, 
         shufle= False,
         ylabelname= None
     )
-    logger.info('Loaded data being preprocessed')
 
      # make prediction
     prediction = cnn_model.predict(preprocessed_data)
     # obtain the class with the highest probability
     predicted_class = np.argmax(prediction, axis=1)
     logger.info('Generating prediction on the data')
+    
 
     results = ['NORMAL' if result == 0 else 'PNEUMONIA' for result in predicted_class]
     logger.log(_Logger__message = dict(image_class = results, version = __version__),  _Logger__level = 20)
@@ -82,6 +83,9 @@ def make_bulk_prediction(*, images_data: Path) -> dict:
         version = __version__
     )
 
+# for test running the predictions
 # if __name__ == '__main__':
-#     make_single_prediction(image_name=config.modelConfig.sample_test_image, image_dir=core.VAL_FOLDER)
-#     make_bulk_prediction(images_data=core.VAL_FOLDER)
+#     result = make_single_prediction(image_name=config.modelConfig.sample_test_image, image_dir=core.VAL_FOLDER)
+#     print(result)
+#     result = make_bulk_prediction(images_data=core.VAL_FOLDER)
+#     print(result)

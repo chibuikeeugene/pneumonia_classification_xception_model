@@ -14,7 +14,6 @@ from pathlib import Path
 from loguru import logger
 from tqdm import tqdm
 
-from keras.models import load_model
 from glob import glob
 
 logging.basicConfig(level=logging.ERROR)
@@ -170,11 +169,10 @@ def retain_best_model(path: Path) -> None:
 def load_pneumonia_model():
     """ Load a keras model from disk"""
     logger.info(f'Loading model from {TRAINED_MODEL_DIR}')
-    for file in os.listdir(core.TRAINED_MODEL_DIR):
+    for file in os.listdir(TRAINED_MODEL_DIR):
         if file.endswith(".keras"):
-            model_file = os.path.join(core.TRAINED_MODEL_DIR, file)
-
-    build_model = load_model(model_file)
+            model_file = os.path.join(TRAINED_MODEL_DIR, file)
+    build_model = tf.keras.models.load_model(model_file)
     return build_model
 # ================= END =================== #
 
